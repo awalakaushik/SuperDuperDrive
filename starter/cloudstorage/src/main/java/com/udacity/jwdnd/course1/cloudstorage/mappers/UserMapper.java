@@ -5,8 +5,8 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
-    @Select("SELECT * FROM User WHERE userId = #{userId}")
-    User selectUser(Integer userId);
+    @Select("SELECT * FROM User WHERE userId = #{username}")
+    User getUser(Integer username);
 
     @Insert("INSERT INTO User(userName, salt, password, firstName,lastName) VALUES (#{userName}, " +
             "${salt}," +
