@@ -26,6 +26,9 @@ public class HomeController {
         return "home";
     }
 
+    /*
+    * Notes
+    * */
     @GetMapping("/notes")
     public String getNotes(Authentication authentication, Note note, Model model) {
         model.addAttribute("notes", noteService.getNotes(authentication.getName()));
@@ -38,6 +41,13 @@ public class HomeController {
         model.addAttribute("notes", noteService.getNotes(authentication.getName()));
         note.setNoteTitle("");
         note.setNoteDescription("");
+        return "home";
+    }
+
+    @DeleteMapping("/note/delete")
+    public String deleteNote(Authentication authentication, Note note, Model model) {
+        noteService.deleteNote(note.getNoteId());
+        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
         return "home";
     }
 
