@@ -5,15 +5,15 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface NoteMapper {
-    @Select("SELECT * FROM Notes WHERE noteId = #{noteId}")
+    @Select("SELECT * FROM Notes WHERE noteid = #{noteId}")
     Note selectNote(Integer noteId);
 
-    @Insert("INSERT INTO Notes(noteTitle, noteDescription, userId) VALUES (#{noteTitle}, " +
+    @Insert("INSERT INTO Notes(notetitle, notedescription, userid) VALUES (#{noteTitle}, " +
             "${noteDescription}," +
             " #{userId})")
-    @Options(useGeneratedKeys = true, keyProperty = "noteId")
+    @Options(useGeneratedKeys = true, keyProperty = "noteid")
     Integer insertNote(Note note);
 
-    @Delete("DELETE FROM Notes WHERE noteId = #{noteId}")
+    @Delete("DELETE FROM Notes WHERE noteid = #{noteId}")
     void deleteNote(Integer noteId);
 }
