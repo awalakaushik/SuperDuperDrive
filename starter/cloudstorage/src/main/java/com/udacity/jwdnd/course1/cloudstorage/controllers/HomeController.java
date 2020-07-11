@@ -5,7 +5,9 @@ import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,6 +20,7 @@ public class HomeController {
         this.noteService = noteService;
     }
 
+//    TODO: Add fetch files when we first login
     @GetMapping()
     public String getHomePage() {
         return "home";
@@ -25,7 +28,16 @@ public class HomeController {
 
     @GetMapping("/notes")
     public String getNotes(Authentication authentication, Note note, Model model) {
-        model.addAttribute("notes", this.noteService.getNotes(authentication.getName()));
+        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
+        return "home";
+    }
+
+    @PostMapping("/note/add")
+    public String addNote(Authentication authentication, Note note, Model model) {
+        noteService.addNote(note);
+        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
+        note.setNoteTitle("");
+        note.setNoteDescription("");
         return "home";
     }
 
