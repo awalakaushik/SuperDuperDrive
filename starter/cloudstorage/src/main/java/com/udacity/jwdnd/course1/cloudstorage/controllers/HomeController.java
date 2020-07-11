@@ -11,93 +11,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/home")
 public class HomeController {
 
     private NoteService noteService;
-    private UserService userService;
 
-    public HomeController(NoteService noteService, UserService userService) {
+    public HomeController(NoteService noteService) {
         this.noteService = noteService;
-        this.userService = userService;
     }
 
-//    TODO: Add fetch files when we first login
     @GetMapping()
-    public String getHomePage() {
+    public String getHomePage(Authentication authentication, Model model) {
+        List<Note> notes = noteService.getNotes(authentication.getName());
+        model.addAttribute("notes", notes);
         return "home";
-    }
-
-    /*
-    * Notes
-    * */
-    @GetMapping("/notes")
-    public String getNotes(Authentication authentication, Model model) {
-
-        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
-
-        return "home";
-    }
-
-    @PostMapping("/note/add")
-    public String addNote(Authentication authentication, Note note, Model model) {
-
-        String errorMessage;
-
-        note.setUserId(userService.getUser(authentication.getName()).getUserid());
-
-        int rowsAdded = noteService.addNote(note);
-
-        if (rowsAdded < 0) {
-            errorMessage = "There was an error adding the note. Please try again!";
-
-            model.addAttribute("errorMessage", errorMessage);
-            model.addAttribute("notes", noteService.getNotes(authentication.getName()));
-
-            return "result";
-        }
-
-        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
-
-        note.setNoteTitle("");
-        note.setNoteDescription("");
-
-        return "result";
-    }
-
-    @PostMapping("/note/edit")
-    public String editNote(Authentication authentication, Note note, Model model) {
-
-        String errorMessage;
-
-        int rowsUpdated = noteService.updateNote(note);
-
-        if (rowsUpdated < 0) {
-            errorMessage = "There was an error updating the note. Please try again!";
-
-            model.addAttribute("errorMessage", errorMessage);
-            model.addAttribute("notes", noteService.getNotes(authentication.getName()));
-
-            return "result";
-        }
-
-        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
-
-        note.setNoteTitle("");
-        note.setNoteDescription("");
-
-        return "result";
-    }
-
-    @DeleteMapping("/note/delete")
-    public String deleteNote(Authentication authentication, Note note, Model model) {
-
-        noteService.deleteNote(note.getNoteId());
-
-        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
-
-        return "result";
     }
 
 }
