@@ -3,13 +3,15 @@ package com.udacity.jwdnd.course1.cloudstorage.mappers;
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface NoteMapper {
     @Select("SELECT * FROM Notes WHERE noteid = #{noteId}")
     Note getNote(Integer noteId);
 
     @Select("Select * from Notes where username = #{username}")
-    Note[] getNotes(String username);
+    List<Note> getNotes(String username);
 
     @Insert("INSERT INTO Notes(notetitle, notedescription, userid) VALUES (#{noteTitle}, " +
             "${noteDescription}," +
