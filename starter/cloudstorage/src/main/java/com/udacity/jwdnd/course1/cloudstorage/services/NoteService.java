@@ -16,6 +16,10 @@ public class NoteService {
         return noteMapper.addNote(new Note(null, note.getNoteTitle(), note.getNoteDescription(), note.getUserId()));
     }
 
+    public int updateNote(Note note) {
+        return noteMapper.updateNote(note);
+    }
+
     public Note[] getNotes(String username) {
         return noteMapper.getNotes(username);
     }
