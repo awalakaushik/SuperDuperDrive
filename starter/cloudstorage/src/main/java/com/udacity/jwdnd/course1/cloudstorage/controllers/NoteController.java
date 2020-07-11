@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,14 +20,6 @@ public class NoteController {
     public NoteController(NoteService noteService, UserService userService) {
         this.noteService = noteService;
         this.userService = userService;
-    }
-
-    @GetMapping(value = {"/notes"})
-    public String getNotes(Authentication authentication, Model model) {
-
-        model.addAttribute("notes", noteService.getNotes(authentication.getName()));
-
-        return "home";
     }
 
     @PostMapping(value = {"/note/add"})
