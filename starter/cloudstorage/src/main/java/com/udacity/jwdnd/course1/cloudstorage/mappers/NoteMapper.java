@@ -6,13 +6,13 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface NoteMapper {
     @Select("SELECT * FROM Notes WHERE noteid = #{noteId}")
-    Note selectNote(Integer noteId);
+    Note getNote(Integer noteId);
 
     @Insert("INSERT INTO Notes(notetitle, notedescription, userid) VALUES (#{noteTitle}, " +
             "${noteDescription}," +
             " #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "noteid")
-    Integer insertNote(Note note);
+    Integer addNote(Note note);
 
     @Delete("DELETE FROM Notes WHERE noteid = #{noteId}")
     void deleteNote(Integer noteId);
