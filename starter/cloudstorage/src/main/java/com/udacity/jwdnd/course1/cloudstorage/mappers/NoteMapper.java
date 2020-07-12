@@ -7,22 +7,21 @@ import java.util.List;
 
 @Mapper
 public interface NoteMapper {
-    @Select("SELECT * FROM Notes WHERE noteid = #{noteId}")
-    Note getNote(Integer noteId);
+    @Select("SELECT * FROM Notes WHERE noteid = #{noteid}")
+    Note getNote(Integer noteid);
 
-    @Select("Select * from Notes where userid = #{userId}")
-    List<Note> getNotes(Integer userId);
+    @Select("Select * from Notes where userid = #{userid}")
+    List<Note> getNotes(Integer userid);
 
     @Insert("INSERT INTO Notes(notetitle, notedescription, userid) VALUES (#{noteTitle}, " +
-            "${noteDescription}," +
-            " #{userId})")
+            "#{noteDescription}," +
+            " #{userid})")
     @Options(useGeneratedKeys = true, keyProperty = "noteid")
-    Integer addNote(Note note);
+    int addNote(Note note);
 
-    @Update("UPDATE Notes SET notetitle = #{noteTitle}, notedescription = #{noteDescription} where noteid = #{noteId}" +
-            " and userid = #{userId}")
-    Integer updateNote(Note note);
+    @Update("UPDATE Notes SET notetitle = #{noteTitle}, notedescription = #{noteDescription} where noteid = #{noteid}")
+    int updateNote(Note note);
 
-    @Delete("DELETE FROM Notes WHERE noteid = #{noteId}")
-    void deleteNote(Integer noteId);
+    @Delete("DELETE FROM Notes WHERE noteid = #{noteid}")
+    void deleteNote(Integer noteid);
 }
