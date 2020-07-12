@@ -5,14 +5,18 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface CredentialMapper {
-    @Select("SELECT * from Credentials where credentialId = #{credentialId}")
-    Credential selectCredential(Integer credentialId);
+    @Select("SELECT * from Credentials where credentialid = #{credentialid}")
+    Credential selectCredential(Integer credentialid);
 
     @Insert("INSERT INTO Credentials (url, username, key, password, userId) VALUES (#{url}, #{username}, #{key}, " +
             "#{password}, #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")
-    Integer insertCredentials(Credential credential);
+    Integer addCredentials(Credential credentials);
 
-    @Delete("DELETE FROM Credentials WHERE credentialId = #{credentialId}")
-    void deleteCredential(Integer credentialId);
+    @Update("Update Credentials SET url = #{url}, username = #{username}, key = #{key}, password = #{password}, " +
+            "userid = #{userid} where credentialid = #{credentialid}")
+    Integer updateCredentials(Credential credentials);
+
+    @Delete("DELETE FROM Credentials WHERE credentialid = #{credentialid}")
+    void deleteCredential(Integer credentialid);
 }
