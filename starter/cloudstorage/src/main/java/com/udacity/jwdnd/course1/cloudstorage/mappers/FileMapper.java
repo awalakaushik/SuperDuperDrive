@@ -2,22 +2,23 @@ package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.File;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Mapper
 public interface FileMapper {
-    @Select("SELECT * FROM Files WHERE fileid = #{fileid}")
-    File getFile(Integer fileId);
+    @Select("SELECT * FROM Files WHERE filename = #{filename}")
+    File getFile(String filename);
 
-    @Insert("INSERT INTO Files(filename, contenttype, filesize, userid, filedata) VALUES (#{fileName}, " +
-            "${contentType}," +
-            " #{fileSize}, #{userid}, #{fileData})")
+    @Select("Select * from Files where userid = #{userid}")
+    List<File> getFiles(Integer userid);
+
+    @Insert("INSERT INTO FILES (filename, contenttype, filesize, userid, filedata) VALUES (#{filename}, " +
+            "#{contenttype}, #{filesize}, #{userid}, #{filedata})")
     @Options(useGeneratedKeys = true, keyProperty = "fileid")
-    Integer insertFile(File file);
-
-    @Update("UPDATE Files SET filename = #{filename}, contenttype= #{contentType}, filesize = #{fileSize}, filedata =" +
-            " #{fileData}")
-    Integer updateFile(File file);
+    int insertFile(File file);
 
     @Delete("DELETE FROM Files WHERE fileid = #{fileid}")
-    void deleteFile(Integer fileId);
+    void deleteFile(Integer fileid);
 }
