@@ -1,60 +1,76 @@
 package com.udacity.jwdnd.course1.cloudstorage.models;
 
-import java.sql.Blob;
-
 public class File {
-    private Integer fileId;
-    private String fileName;
-    private String contentType;
-    private String fileSize;
-    private Integer userId;
-    private Blob fileData;
+    private Integer fileid;
+    private String filename;
+    private String contenttype;
+    private String filesize;
+    private Integer userid;
+    private byte[] filedata;
+    private String encodedUrl;
 
-    public Integer getFileId() {
-        return fileId;
+    public String getEncodedUrl() {
+        return encodedUrl;
     }
 
-    public void setFileId(Integer fileId) {
-        this.fileId = fileId;
+    public void setEncodedUrl(String encodedUrl) {
+        this.encodedUrl = encodedUrl;
     }
 
-    public String getFileName() {
-        return fileName;
+    public File(Integer fileid, String filename, String contenttype, String filesize, Integer userid, byte[] filedata) {
+        this.fileid = fileid;
+        this.filename = filename;
+        this.contenttype = contenttype;
+        this.filesize = filesize;
+        this.userid = userid;
+        this.filedata = filedata;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public Integer getFileid() {
+        return fileid;
     }
 
-    public String getContentType() {
-        return contentType;
+    public void setFileid(Integer fileid) {
+        this.fileid = fileid;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
+    public String getFilename() {
+        return filename;
     }
 
-    public String getFileSize() {
-        return fileSize;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
-    public void setFileSize(String fileSize) {
-        this.fileSize = fileSize;
+    public String getContenttype() {
+        return contenttype;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public void setContenttype(String contenttype) {
+        this.contenttype = contenttype;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public String getFilesize() {
+        return filesize;
     }
 
-    public Blob getFileData() {
-        return fileData;
+    public void setFilesize(String filesize) {
+        this.filesize = filesize;
     }
 
-    public void setFileData(Blob fileData) {
-        this.fileData = fileData;
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public byte[] getFiledata() {
+        return filedata;
+    }
+
+    public void setFiledata(byte[] filedata) {
+        this.filedata = filedata;
     }
 }
