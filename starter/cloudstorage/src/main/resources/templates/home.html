@@ -65,7 +65,9 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button style="margin: 0.25em;" id="show-note-modal" type="button"
+                                class="btn btn-info float-right"
+                                onclick="showNoteModal()">
                             + Add a New Note
                         </button>
 
@@ -79,13 +81,15 @@
                                     </tr>
                                 </thead>
                                 <tbody th:each="note : ${notes}">
-                                    <tr>
+                                    <tr class="note-row">
                                         <td>
-                                            <button th:onclick="javascript:showNoteModal([[${note}]])" type="button" class="btn btn-success">Edit</button>
+                                            <button id="edit-note" th:onclick="javascript:showNoteModal([[${note}]])"
+                                                    type="button"
+                                                     class="btn btn-success">Edit</button>
                                             <a th:href="@{'/notes/delete/' + ${note.noteid}}"
-                                               class="btn btn-danger">Delete</a>
+                                               class="btn btn-danger" id="delete-note">Delete</a>
                                         </td>
-                                        <th scope="row" th:text="${note.noteTitle}"></th>
+                                        <th id="note-title-view" scope="row" th:text="${note.noteTitle}"></th>
                                         <td th:text="${note.noteDescription}"></td>
                                     </tr>
                                 </tbody>
@@ -117,7 +121,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                                        <button type="button" id="save-note" class="btn btn-primary"
+                                                onclick="$('#noteSubmit').click();">Save changes</button>
                                     </div>
                                 </div>
                             </div>
