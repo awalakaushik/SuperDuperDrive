@@ -66,32 +66,61 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
-	public void testAddNoteFunctionality() throws InterruptedException {
+	public void testAddNote() throws InterruptedException {
 
 		AddNote();
 
 		WebElement addedNote = driver.findElement(By.id("note-title-view"));
-		Assertions.assertTrue(addedNote.getText().equals("Test Note"));
+		Assertions.assertEquals("Test Note", addedNote.getText());
 	}
 
 	@Test
-	public void testEditNoteFunctionality() throws InterruptedException {
+	public void testEditNote() throws InterruptedException {
 
 		AddNote();
 		EditNote();
 
 		WebElement editedNote = driver.findElement(By.id("note-title-view"));
-		Assertions.assertTrue(editedNote.getText().equals("Test Note!"));
+		Assertions.assertEquals("Test Note!", editedNote.getText());
 
 	}
 
 	@Test
-	public void testDeleteNoteFunctionality() throws InterruptedException {
+	public void testDeleteNote() throws InterruptedException {
 		AddNote();
 		DeleteNote();
 
 		boolean isDeletedNoteDisplayed = driver.findElements(By.id("note-title-view")).isEmpty();
 		Assertions.assertTrue(isDeletedNoteDisplayed);
+	}
+
+	@Test
+	public void testAddCredentials() throws InterruptedException {
+
+		AddCredentials();
+
+		WebElement addedCredentials = driver.findElement(By.id("credential-username-view"));
+		Assertions.assertEquals("adev", addedCredentials.getText());
+	}
+
+	@Test
+	public void testEditCredentials() throws InterruptedException {
+
+		AddCredentials();
+		EditCredentials();
+
+		WebElement editedCredentials = driver.findElement(By.id("credential-username-view"));
+		Assertions.assertEquals("adev123", editedCredentials.getText());
+
+	}
+
+	@Test
+	public void testDeleteCredentials() throws InterruptedException {
+		AddCredentials();
+		DeleteCredentials();
+
+		boolean isDeletedCredentialDisplayed = driver.findElements(By.id("credential-url-view")).isEmpty();
+		Assertions.assertTrue(isDeletedCredentialDisplayed);
 	}
 
 	private void SignupUser() throws InterruptedException {
@@ -188,6 +217,74 @@ class CloudStorageApplicationTests {
 
 		WebElement deleteNoteLink = driver.findElement(By.id("delete-note"));
 		deleteNoteLink.click();
+		Thread.sleep(500);
+
+		WebElement navigateHomeLink = driver.findElement(By.id("nav-home"));
+		navigateHomeLink.click();
+		Thread.sleep(500);
+	}
+
+	private void AddCredentials() throws InterruptedException {
+		SignupUser();
+		LoginUser();
+
+		WebElement credentialsTab = driver.findElement(By.id("nav-credentials-tab"));
+		credentialsTab.click();
+		Thread.sleep(500);
+
+		WebElement showCredentialsModalButton = driver.findElement(By.id("show-credential-modal"));
+		showCredentialsModalButton.click();
+		Thread.sleep(500);
+
+		WebElement credentialUrlTextbox = driver.findElement(By.id("credential-url"));
+		credentialUrlTextbox.sendKeys("http://localhost:8080");
+
+		WebElement credentialUsernameTextbox = driver.findElement(By.id("credential-username"));
+		credentialUsernameTextbox.sendKeys("adev");
+
+		WebElement credentialPaswordTextbox = driver.findElement(By.id("credential-password"));
+		credentialPaswordTextbox.sendKeys("P@$$word!1234");
+
+		WebElement saveNoteButton = driver.findElement(By.id("save-credentials"));
+		saveNoteButton.click();
+		Thread.sleep(500);
+
+		WebElement navigateHomeLink = driver.findElement(By.id("nav-home"));
+		navigateHomeLink.click();
+		Thread.sleep(500);
+
+		credentialsTab = driver.findElement(By.id("nav-credentials-tab"));
+		credentialsTab.click();
+		Thread.sleep(500);
+	}
+
+	private void EditCredentials() throws InterruptedException {
+
+		WebElement editCredentialsButton = driver.findElement(By.id("edit-credentials"));
+		editCredentialsButton.click();
+		Thread.sleep(500);
+
+		WebElement credentialUsernameTextBox = driver.findElement(By.id("credential-username"));
+		credentialUsernameTextBox.clear();
+		credentialUsernameTextBox.sendKeys("adev123");
+
+		WebElement saveCredentialsButton = driver.findElement(By.id("save-credentials"));
+		saveCredentialsButton.click();
+		Thread.sleep(500);
+
+		WebElement navigateHomeLink = driver.findElement(By.id("nav-home"));
+		navigateHomeLink.click();
+		Thread.sleep(500);
+
+		WebElement credentialsTab = driver.findElement(By.id("nav-credentials-tab"));
+		credentialsTab.click();
+		Thread.sleep(500);
+	}
+
+	private void DeleteCredentials() throws InterruptedException {
+
+		WebElement deleteCredentialsLink = driver.findElement(By.id("delete-credentials"));
+		deleteCredentialsLink.click();
 		Thread.sleep(500);
 
 		WebElement navigateHomeLink = driver.findElement(By.id("nav-home"));
