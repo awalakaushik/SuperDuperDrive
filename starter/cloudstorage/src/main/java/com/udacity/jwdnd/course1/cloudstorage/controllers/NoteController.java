@@ -28,20 +28,26 @@ public class NoteController {
         String errorMessage;
         int rowsAffected;
 
-        if (note.getNoteid() != null) {
-            rowsAffected = noteService.updateNote(note);
-        } else {
-            note.setUserid(userService.getUser(authentication.getName()).getUserid());
-            rowsAffected = noteService.addNote(note);
-        }
+        try {
+            if (note.getNoteid() != null) {
+                rowsAffected = noteService.updateNote(note);
+            } else {
+                note.setUserid(userService.getUser(authentication.getName()).getUserid());
+                rowsAffected = noteService.addNote(note);
+            }
 
-        if (rowsAffected <= 0) {
-            errorMessage = "There was an error adding/updating the note. Please try again!";
+            if (rowsAffected <= 0) {
+                errorMessage = "There was an error adding/updating the note. Please try again!";
+                model.addAttribute("errorMessage", errorMessage);
+                return "result";
+            }
+
+            return "result";
+        } catch (Exception ex) {
+            errorMessage = "An error occurred while processing the request. Please try again!";
             model.addAttribute("errorMessage", errorMessage);
             return "result";
         }
-
-        return "result";
     }
 
     @GetMapping("/notes/delete/{noteid}")

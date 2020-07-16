@@ -31,20 +31,26 @@ public class CredentialController {
         String errorMessage;
         int rowsAffected;
 
-        if (credentials.getCredentialid() != null) {
-            rowsAffected = credentialService.updateCredentials(credentials);
-        } else {
-            credentials.setUserid(userService.getUser(authentication.getName()).getUserid());
-            rowsAffected = credentialService.addCredential(credentials);
-        }
+        try {
+            if (credentials.getCredentialid() != null) {
+                rowsAffected = credentialService.updateCredentials(credentials);
+            } else {
+                credentials.setUserid(userService.getUser(authentication.getName()).getUserid());
+                rowsAffected = credentialService.addCredential(credentials);
+            }
 
-        if (rowsAffected <= 0) {
-            errorMessage = "There was an error adding/updating the credentials. Please try again!";
+            if (rowsAffected <= 0) {
+                errorMessage = "There was an error adding/updating the credentials. Please try again!";
+                model.addAttribute("errorMessage", errorMessage);
+                return "result";
+            }
+
+            return "result";
+        } catch (Exception ex) {
+            errorMessage = "An error occurred while processing the request. Please try again!";
             model.addAttribute("errorMessage", errorMessage);
             return "result";
         }
-
-        return "result";
     }
 
     @GetMapping("/credentials/delete/{credentialid}")
